@@ -6,7 +6,7 @@ If `samna` cannot detect your board, it is usually because Windows has reclaimed
 
 ### Solution
 
-🔑 **Windows PowerShell (Administrator)**
+**Windows PowerShell (Administrator)**
 
 Reattach the device to WSL:
 
