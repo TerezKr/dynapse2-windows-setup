@@ -42,6 +42,12 @@ Navigate to your project directory:
 cd /path/to/your/project
 ```
 
+Activate the Conda environment (if needed):
+
+```bash
+conda activate dynapse_env_py310
+```
+
 Open the project in VS Code:
 
 ```bash
@@ -50,19 +56,7 @@ code .
 
 ---
 
-## 4. Activate the Conda environment (if needed)
-
-**Ubuntu (WSL Terminal)**
-
-If the environment is not already active, run:
-
-```bash
-conda activate dynapse_env_py310
-```
-
----
-
-## 5. Select the correct Python interpreter or Jupyter kernel
+## 4. Select the correct Python interpreter or Jupyter kernel
 
 **Visual Studio Code**
 
@@ -71,7 +65,7 @@ conda activate dynapse_env_py310
 
 ---
 
-## 6. Verify the connection
+## 5. Verify the connection
 
 Run your connection test or FPGA configuration script.
 
