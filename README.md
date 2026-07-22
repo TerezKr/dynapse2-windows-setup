@@ -85,7 +85,9 @@ instead of Unkown/Other device or a device with a warning icon.
 
 <img width="420" height="377" alt="image" src="https://github.com/user-attachments/assets/93e2f43d-cb70-48ea-ab34-dee9b0655bbe" />
 
+> **Note:** If the XEM7310‑A75 does not appear in the device list, disconnect the board from both power and USB, wait a few seconds, and reconnect it. Windows sometimes needs a fresh enumeration before the device becomes visible.
 
+> > **Note:** The Opal Kelly XEM7310‑A75 module (the green board on top of the Dynapse‑2 stack) has a small “power” indicator LED. It should glow green when the board is powered correctly. If the LED is off or, the issue is likely related to the power supply, cable, or even the board itself.
 
 
 
@@ -200,4 +202,288 @@ sudo apt install usbutils
 ```
 
 Expected output:
+```ubuntu
+Bus 002 Device 001: ID 1d6b:0003 Linux Foundation 3.0 root hub
+Bus 001 Device 002: ID 152f:0200 Opal Kelly Inc. XEM7310-A75
+Bus 001 Device 001: ID 1d6b:0002 Linux Foundation 2.0 root hub
+```
 
+
+
+
+
+## Step 5 – Configure USB permissions (udev rules)
+
+By default, Ubuntu may not allow your user account to access USB devices directly. To allow `samna` to communicate with the DYNAP-SE2 Stack without requiring `sudo`, you need to create a **udev rule**.
+
+---
+
+### 5.1 Find your USB Vendor ID
+
+After running in Ubuntu (WSL Terminal),
+
+```bash
+lsusb
+```
+
+locate the line corresponding to your DYNAP-SE2 Stack. For example:
+
+```text
+Bus 001 Device 002: ID 152f:XXXX FrontPanel Device
+```
+
+The first four hexadecimal digits (`152f` in this example) are the **Vendor ID**.
+
+> **Note:** Make sure to check the Vendor ID value reported on **your** system.
+
+---
+
+### 5.2 Create a udev rule
+
+Open a new udev rules file:
+
+```bash
+sudo nano /etc/udev/rules.d/99-opalkelly.rules
+```
+This will open the Nano editor.
+
+Add the following line, replacing `152f` with your own Vendor ID if necessary:
+
+```text
+SUBSYSTEM=="usb", ATTR{idVendor}=="151f", MODE="0666"
+```
+
+This rule grants read and write access to the USB device for all users, allowing `samna` to communicate with the board.
+
+Save the file:
+
+- Press **Ctrl + O** to save.
+- Press **Enter** to confirm the filename.
+- Press **Ctrl + X** to exit Nano.
+
+---
+
+### 5.3 Reload the udev rules
+
+In Ubuntu, run:
+
+```bash
+sudo udevadm control --reload-rules
+sudo udevadm trigger
+```
+
+These commands tell Ubuntu to reload the updated udev configuration without requiring a restart.
+
+
+### 5.4 Verify the udev rule
+
+After reloading the rules, check that the USB device has read and write permissions by running:
+
+```bash
+ls -l /dev/bus/usb/*/*
+```
+
+Locate the entry corresponding to your DYNAP-SE2 Stack.
+
+If the rule was applied successfully, you should see permissions similar to:
+
+```text
+crw-rw-rw- ...
+```
+
+or at least that the device is no longer restricted to the root user.
+
+If the permissions have not changed:
+
+1. Disconnect and reconnect the board.
+2. Reattach it to WSL:
+
+```powershell
+usbipd attach --wsl --busid <BUSID>
+```
+
+3. Check the permissions again.
+
+
+
+
+## Step 6 – Create the Conda environment
+
+The DYNAP-SE2 project uses a Conda environment to manage all required Python packages and dependencies.
+
+### 6.1 Create the environment
+
+In Ubuntu, navigate to the project directory.
+
+The repository contains an environment file ( `dynapse2_env_py310.yml`), create the Conda environment by running:
+
+```bash
+conda env create -f dynapse2_env_py310.yml
+```
+
+### 6.2 Activate the environment
+
+```bash
+conda activate <environment_name>
+```
+
+Replace `<environment_name>` with the name defined in the `environment.yml` file (i.e., `dynapse_env_py310`).
+
+---
+
+### 6.3 Verify the installation
+
+Verify that the correct Conda environment is active:
+
+```bash
+conda env list
+```
+
+The active environment is marked with an asterisk (`*`).
+
+
+
+
+## Step 7 – Install `samna`
+
+`samna` is the Python library used to communicate with the DYNAP-SE2 Stack. It provides the interface for detecting the board, configuring the FPGA, and interacting with the neuromorphic hardware.
+
+---
+
+### 7.1 Install `samna`
+
+In **Ubuntu (WSL Terminal)**:
+
+Make sure you are still using the activated Conda environment (`dynapse_env_py310`).
+
+Then install the required version of `samna`:
+
+```bash
+pip install samna==0.38.3.0
+```
+
+> **Note:** This guide was tested using `samna` version **0.38.3.0**. Other versions may behave differently.
+
+---
+
+### 7.2 Verify the installation
+
+Run:
+
+```bash
+python -c "import samna; print(samna.__version__)"
+```
+
+If the installation was successful, you should see:
+
+```text
+0.38.3.0
+```
+
+
+
+
+
+
+## Step 8 – Verify that `samna` detects the DYNAP-SE2 Stack
+
+Before programming the FPGA, verify that `samna` can detect the connected board.
+
+---
+
+### 8.1 Open the project in Visual Studio Code
+
+In Ubuntu, navigate to your project directory and open it in VS Code:
+
+```bash
+cd /path/to/your/project
+code .
+```
+
+This will open the project inside VS Code using the WSL environment.
+
+In VS Code, create a new Python file and copy and paste the following code there:
+
+```python
+import samna
+
+devices = samna.device.get_unopened_devices()
+
+if not devices:
+    print("No DYNAP-SE2 device detected.")
+else:
+    print(f"Found {len(devices)} device(s):")
+    for device in devices:
+        print(device.device_type_name)
+```
+
+Save the file.
+
+> **Note:** Make sure the correct Conda environment is selected as the Python interpreter in VS Code for `.py` scripts. Select the kernel associated with your Conda environment (for example, `dynapse_env_py310`) for `.ipynb` notebooks.
+
+
+---
+
+### 8.2 Run the script
+
+Run the script in VS Code.
+
+If everything is configured correctly, you should see:
+
+```text
+Found 1 device(s):
+DYNAP-SE2 Stack
+```
+
+---
+
+### Troubleshooting
+
+If no devices are found:
+
+- Verify that the DYNAP-SE2 Stack is connected.
+- Make sure the board is attached to WSL:
+
+```powershell
+usbipd attach --wsl --busid <BUSID>
+```
+
+- Check that the FrontPanel USB Driver is installed correctly.
+- Verify that the udev rule is configured correctly and has been reloaded.
+
+
+
+
+## Step 9 – Configure the FPGA
+
+Once `samna` successfully detects the DYNAP-SE2 Stack, you can configure the FPGA by replacing the code in your Python file with the following:
+
+```python
+BITFILE = "bitfiles/Dynapse2Stack.bit"
+
+device_infos = samna.device.get_unopened_devices()
+
+if not device_infos:
+    raise RuntimeError("No DYNAP-SE2 device found.")
+
+board = samna.device.open_device(device_infos[0])
+
+if not board.configure_opal_kelly(BITFILE):
+    raise RuntimeError("Failed to configure FPGA.")
+
+board.reset_fpga()
+
+print("Board ready.")
+```
+
+Run the script again.
+
+If the configuration is successful, you should see:
+
+```text
+Found 1 device(s):
+  DYNAP-SE2 Stack
+Board ready.
+```
+
+Congratulations! Your DYNAP-SE2 Stack is now configured and ready for use.
