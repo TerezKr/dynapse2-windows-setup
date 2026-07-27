@@ -11,6 +11,14 @@ Follow these steps whenever you want to start working with the board.
 Connect the DYNAP-SE2 Stack to your computer via USB.
 
 ---
+REAL 2 / Check in device manager that it is connected corretly as Front Panel device
+3. Open Ubuntu, activate environment, and navigate to the project directory
+4. Open Widnows powerShell as Admin (right click on PowerShell or command) and connect board to WSL
+5. In Ubuntu, do code . in the project directory
+6. In VS connect to the correct kernel - if it doesnt do it automatically.
+7. Start coding :) (HAHA to urcite, beztak tam bude nejaky problem achjo)
+
+Windows Power Shell
 
 ## 2. Attach the board to WSL
 
