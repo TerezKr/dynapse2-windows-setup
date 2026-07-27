@@ -22,6 +22,8 @@ Replace `<BUSID>` with the BUSID of your DYNAP-SE2 Stack (see **Step 3**).
 
 If the script hangs while calling `configure_opal_kelly()`, check the following:
 
+TRY RECONNECTING THE BOARD AND CHECK IN DEVICE MANAGER
+
 - The **FrontPanel USB Driver** is installed correctly.
 - The DYNAP-SE2 Stack is attached to WSL using `usbipd`.
 - The bitfile path is correct (e.g. `bitfiles/Dynapse2Stack.bit`).
