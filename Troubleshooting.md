@@ -1,5 +1,7 @@
 # Troubleshooting
 
+Nothing works? Restart your PC and try again.
+
 ## `No DYNAP-SE2 device found`
 
 If `samna` cannot detect your board, it is usually because Windows has reclaimed the USB device after installing or updating the FrontPanel USB Driver.
