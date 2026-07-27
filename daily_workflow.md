@@ -16,6 +16,8 @@ Connect the DYNAP-SE2 Stack to your computer via USB.
 
 **Windows PowerShell (Administrator)**
 
+(To get to the Admin., right click or run in regular PowerShell: `Start-Process powershell -Verb RunAs`)
+
 Find the BUSID of the board:
 
 ```powershell
