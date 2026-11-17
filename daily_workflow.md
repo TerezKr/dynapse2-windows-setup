@@ -8,11 +8,10 @@ Follow these steps whenever you want to start working with the board.
 
 ## 1. Connect the DYNAP-SE2 Stack
 
-After connecting the board to power supply, connect the DYNAP-SE2 Stack to your computer via USB.
+After connecting the board to a power supply, connect the DYNAP-SE2 Stack to your computer via USB.
 
 ---
 
-Windows Power Shell
 
 ## 2. Attach the board to WSL
 
