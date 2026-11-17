@@ -34,9 +34,7 @@ Otherwise, check the following:
 
 The `usbutils` package is not installed.
 
-🐧 **Ubuntu (WSL Terminal)**
-
-Install it by running:
+Install it by running the following in Ubuntu (WSL Terminal):
 
 ```bash
 sudo apt install usbutils
@@ -46,9 +44,7 @@ sudo apt install usbutils
 
 ## `Permission denied`
 
-If you receive a permission error when accessing the USB device, first check the device permissions.
-
-🐧 **Ubuntu (WSL Terminal)**
+If you receive a permission error when accessing the USB device, first check the device permissions in Ubuntu (WSL Terminal).
 
 Run:
 
@@ -101,7 +97,7 @@ board.reset_fpga()
 print("Board ready.")
 ```
 
-If everything has been configured successfully, the output should be similar to:
+If everything has been configured successfully, the output should be:
 
 ```text
 Found 1 device(s):
@@ -110,5 +106,4 @@ Board ready.
 ```
 
 
-Nothing works? Restart your PC and try again.
-
+Generally, if you encounter an issue, try restarting your computer and reconnecting the board, it may help.
