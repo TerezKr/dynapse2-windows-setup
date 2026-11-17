@@ -1,14 +1,12 @@
 # Troubleshooting
 
-Nothing works? Restart your PC and try again.
-
 ## `No DYNAP-SE2 device found`
 
 If `samna` cannot detect your board, it is usually because Windows has reclaimed the USB device after installing or updating the FrontPanel USB Driver.
 
 ### Solution
 
-**Windows PowerShell (Administrator)**
+**Windows PowerShell Administrator**
 
 Reattach the device to WSL:
 
@@ -16,15 +14,14 @@ Reattach the device to WSL:
 usbipd attach --wsl --busid <BUSID>
 ```
 
-Replace `<BUSID>` with the BUSID of your DYNAP-SE2 Stack (see **Step 3**).
+Replace `<BUSID>` with the BUSID of your DYNAP-SE2 Stack (see **Step 3** in README).
 
 ---
 
 ## `configure_opal_kelly()` hangs indefinitely
 
-If the script hangs while calling `configure_opal_kelly()`, check the following:
-
-TRY RECONNECTING THE BOARD AND CHECK IN DEVICE MANAGER
+If the script hangs while calling `configure_opal_kelly()`, reconnecting the board or restarting you computer and reconnecting the board may help.
+Otherwise, check the following:
 
 - The **FrontPanel USB Driver** is installed correctly.
 - The DYNAP-SE2 Stack is attached to WSL using `usbipd`.
@@ -113,5 +110,5 @@ Board ready.
 ```
 
 
-
+Nothing works? Restart your PC and try again.
 
