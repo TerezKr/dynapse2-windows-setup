@@ -30,9 +30,6 @@ Attach it to WSL:
 ```powershell
 usbipd attach --wsl --busid <BUSID>
 ```
-
-> **Note:** You only need to run `usbipd bind` once when setting up the device for the first time. For daily use, only the `attach` command is required.
-
 ---
 
 ## 3. Open the project
