@@ -17,7 +17,7 @@ After connecting the board to a power supply, connect the DYNAP-SE2 Stack to you
 
 **Windows PowerShell (Administrator)**
 
-(To get to the Admin., right click or run in regular PowerShell: `Start-Process powershell -Verb RunAs`)
+To open PowerShell as administrator, right-click Windows PowerShell and select *Run as administrator*, or run `Start-Process powershell -Verb RunAs` in a regular PowerShell window.
 
 Find the BUSID of the board:
 
@@ -60,7 +60,7 @@ code .
 
 **Visual Studio Code**
 
-- For **Python scripts (`.py`)**, select the Python interpreter from the `dynapse_env_py310` Conda environment.
+- For **Python scripts (`.py`)**, select the Python interpreter from the `dynapse2_env_py310` Conda environment.
 - For **Jupyter notebooks (`.ipynb`)**, select the Jupyter kernel associated with the same environment.
 
 ---
