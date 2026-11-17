@@ -45,7 +45,7 @@ cd /path/to/your/project
 Activate the Conda environment (if needed):
 
 ```bash
-conda activate dynapse_env_py310
+conda activate dynapse2_env_py310
 ```
 
 Open the project in VS Code:
