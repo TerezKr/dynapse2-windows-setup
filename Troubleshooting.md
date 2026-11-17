@@ -20,7 +20,7 @@ Replace `<BUSID>` with the BUSID of your DYNAP-SE2 Stack (see **Step 3** in READ
 
 ## `configure_opal_kelly()` hangs indefinitely
 
-If the script hangs while calling `configure_opal_kelly()`, reconnecting the board or restarting you computer and reconnecting the board may help.
+If the script hangs while calling `configure_opal_kelly()`, reconnecting the board or restarting your computer and reconnecting the board may help.
 Otherwise, check the following:
 
 - The **FrontPanel USB Driver** is installed correctly.
