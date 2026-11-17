@@ -1,12 +1,12 @@
 # DYNAP-SE2 Stack on Windows (WSL2) Setup Guide
 
-A complete guide for connecting a SynSense DYNAP-SE2 Stack (Opal Kelly XEM7310-A75) to Windows using WSL2 and running it with samna.
+A guide for connecting a SynSense DYNAP-SE2 Stack (Opal Kelly XEM7310-A75) to Windows using WSL2 and running it with samna (Python library used to communicate with the DYNAP-SE2).
+
+Note that this guide assumes that WSL2 is already installed and working on your Windows computer.
 
 ## Why this guide exists
 
-At the time of writing, most DYNAP-SE2 examples assume Linux or macOS. This guide documents the additional steps required to make the hardware work on Windows 10/11 using WSL2 (Ubuntu).
-
-It also includes solutions to several issues that are not documented elsewhere.
+At the time of writing (July 2026), DYNAP-SE2 connection assumes Linux or macOS. This guide documents the additional steps required to make the hardware work on Windows 10/11 using WSL2 (Ubuntu). It also includes solutions to several issues that are not documented elsewhere.
 
 ## Tested setup
 | Component         | Version                |
@@ -45,7 +45,6 @@ During the setup you will install:
 | **FrontPanel USB Driver** | Allows Windows to recognize the Opal Kelly FPGA on the DYNAP-SE2 Stack. |
 | **usbipd-win** | Shares USB devices from Windows with WSL2. |
 | **samna** | Python library used to communicate with the DYNAP-SE2 hardware. |
-| **VS Code + Remote - WSL** | Provides a development environment inside WSL2. |
 
 
 
@@ -87,7 +86,7 @@ instead of Unkown/Other device or a device with a warning icon.
 
 > **Note:** If the XEM7310‑A75 does not appear in the device list, disconnect the board from both power and USB, wait a few seconds, and reconnect it. Windows sometimes needs a fresh enumeration before the device becomes visible.
 
-> > **Note:** The Opal Kelly XEM7310‑A75 module (the green board on top of the Dynapse‑2 stack) has a small “power” indicator LED. It should glow green when the board is powered correctly. If the LED is off or, the issue is likely related to the power supply, cable, or even the board itself.
+> > **Note:** The Opal Kelly XEM7310‑A75 module (the green board on top of the Dynapse‑2 stack) has a small “power” indicator LED. It should glow green when the board is powered correctly. If the LED is off, the issue is likely related to the power supply, cable, or even the board itself.
 
 
 
@@ -109,9 +108,10 @@ Open **PowerShell as Administrator** :
   ii.	  Type PowerShell
   iii.	Right-click Windows PowerShell
   iv.	  Choose Run as administrator (will open a blue window)
-  v.	Alternatively, to open PowerShell as administrator, in normal Power Shell run: `Start-Process powershell -Verb RunAs`
+
+Alternatively, to open PowerShell as administrator, in normal Power Shell run: `Start-Process powershell -Verb RunAs`
  
-In Administrator PowerShell run:
+In Administrator PowerShell (blue background) run:
 
 ```powershell
 usbipd list
@@ -238,7 +238,7 @@ The first four hexadecimal digits (`152f` in this example) are the **Vendor ID**
 
 ---
 
-### 5.2 Create a udev rule
+### 5.2 Create an udev rule
 
 Open a new udev rules file:
 
@@ -315,7 +315,7 @@ The DYNAP-SE2 project uses a Conda environment to manage all required Python pac
 
 In Ubuntu, navigate to the project directory.
 
-The repository contains an environment file ( `dynapse2_env_py310.yml`), create the Conda environment by running:
+This repository contains an environment file ( `dynapse2_env_py310.yml`), create the Conda environment by running:
 
 ```bash
 conda env create -f dynapse2_env_py310.yml
@@ -486,4 +486,4 @@ Found 1 device(s):
 Board ready.
 ```
 
-Congratulations! Your DYNAP-SE2 Stack is now configured and ready for use.
+Congrats! Your DYNAP-SE2 Stack is now configured and ready for use.
