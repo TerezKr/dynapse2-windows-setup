@@ -18,7 +18,6 @@ At the time of writing (July 2026), DYNAP-SE2 connection assumes Linux or macOS.
 | FPGA board        | Opal Kelly XEM7310-A75 |
 | Device            | DYNAP-SE2 Stack        |
 | FrontPanel Driver | 5.2.2                  |
-| VS Code           | Latest                 |
 
 
 ## Prerequisites
